@@ -22,6 +22,10 @@ int main(int argc, char* argv[])
 
     double dt = UnitConverter::timeFromSI(1e-15);
 
+    System system;
+    system.createFCCLattice(numberOfUnitCells, latticeConstant, tempInit);
+    system.removeTotalMomentum();
+
     // Initial time
     clock_t time_initial = clock();
 

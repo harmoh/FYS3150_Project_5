@@ -12,11 +12,16 @@ public:
     vec3 acceleration;
     vec3 force;
     vec3 angularMomentum;
-    double mass;
 
-    Particle(vec3 position, vec3 velocity, double mass);
-    Particle(double x, double y, double z, double vx, double vy, double vz, double mass);
+    Particle(double mass);
     void resetForce();
+
+    double mass() {return m_mass;}
+    void setMass(double mass) {m_mass = mass;}
+
+private:
+    double m_mass;
+
 };
 
 #endif // PARTICLE_H

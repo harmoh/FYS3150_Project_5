@@ -11,6 +11,31 @@ System::System()
 
 }
 
+// Apply periodic boundary conditions
+void System::applyPBC()
+{
+
+}
+
+void System::removeTotalMomentum()
+{
+
+}
+
+void System::createFCCLattice(int numberOfUnitCellsPerDimension, double latticeConstant, double temp)
+{
+    for(int i=0; i<100; i++) {
+        Atom *atom = new Atom(UnitConverter::massFromSI(6.63352088e-26));
+        double x = Random::nextDouble(0, 10); // random number in the interval [0,10]
+        double y = Random::nextDouble(0, 10);
+        double z = Random::nextDouble(0, 10);
+        atom->position.set(x,y,z);
+        atom->resetVelocityMaxwellian(temperature);
+        m_atoms.push_back(atom);
+    }
+    setSystemSize(vec3(10, 10, 10)); // Remember to set the correct system size!
+}
+
 void System::calculateForces()
 {
     m_kineticEnergy = 0;
@@ -33,13 +58,11 @@ void System::calculateForces()
             vec3 deltaRVector = particle2.position - particle1.position;
             double dr = deltaRVector.length();
             double dr3 = dr*dr*dr;
-            particle1.force += G * particle1.mass * particle2.mass * deltaRVector / (dr3);
-            particle2.force -= G * particle1.mass * particle2.mass * deltaRVector / (dr3);
-
-            m_angularMomentum += deltaRVector.cross(particle1.velocity);
+            particle1.force += G * particle1.mass() * particle2.mass() * deltaRVector / (dr3);
+            particle2.force -= G * particle1.mass() * particle2.mass() * deltaRVector / (dr3);
         }
         m_potentialEnergy -= particle1.force.length() * particle1.position.length();
-        m_kineticEnergy += 0.5 * particle1.mass * particle1.velocity.lengthSquared();
+        m_kineticEnergy += 0.5 * particle1.mass() * particle1.velocity.lengthSquared();
     }
 }
 
@@ -67,7 +90,6 @@ vec3 System::angularMomentum() const
 {
     return m_angularMomentum;
 }
-
 
 void System::openFileAnimation(string filename)
 {

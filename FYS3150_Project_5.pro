@@ -12,6 +12,7 @@ SOURCES += main.cpp \
 
 HEADERS += \
     vec3.h \
+    random.h \
     verlet.h \
     unitconverter.h \
     system.h \
