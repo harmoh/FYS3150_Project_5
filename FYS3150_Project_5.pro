@@ -6,9 +6,11 @@ CONFIG -= qt
 SOURCES += main.cpp \
     vec3.cpp \
     verlet.cpp \
-    unitconverter.cpp
+    unitconverter.cpp \
+    system.cpp
 
 HEADERS += \
     vec3.h \
     verlet.h \
-    unitconverter.h
+    unitconverter.h \
+    system.h

@@ -3,38 +3,35 @@
 #include <time.h>
 #include "vec3.h"
 #include "verlet.h"
+#include "unitconverter.h"
 
 using namespace std;
 ofstream ofile;
 
 int main(int argc, char* argv[])
 {
-    int numberOfUnitCells = 5;
-    double tempInit = 300; // K
-    double latticeConstant = 5.26; // Angstrom
+    int numberOfUnitCells = 5; // Density of initial lattice (in Angstroms)
+    double tempInit = UnitConverter::temperatureFromSI(300.0); // From K
+    double latticeConstant = UnitConverter::lengthFromAngstroms(5.26); // From Angstroms
 
-    numberOfUnitCells = atoi(argv[1]); // First command line argument
-    tempInit = atoi(argv[2]); // Second command line argument
-    latticeConstant = atoi(argv[3]); // Third command line argument
+    // If there are input arguments are provided:
+    numberOfUnitCells = atoi(argv[1]); // Change number of unit cells
+    tempInit = atoi(argv[2]); // Change initial temperature
+    latticeConstant = atoi(argv[3]); // Change density (in Angstroms) of the lattice constant
 
-    solarSystem.totalSteps = 1e5;
-    int t_initial = 0;
+    double dt = UnitConverter::timeFromSI(1e-15);
 
-    // Final time is set differently for each method
-    double dt = (solarSystem.t_final - t_initial) / (double) solarSystem.totalSteps;
-    int skipPrint = 10; // Only print for every 10th step
+    // Initial time
     clock_t time_initial = clock();
+
     Verlet integratorVerlet(dt);
-    solarSystem.openFilePlot("Positions");
-    solarSystem.openFileAnimation("Positions");
-    solarSystem.openFilePerihelion("PerihelionAngle");
-    for(int step = 0; step < solarSystem.totalSteps; step++)
+
+    for(int step = 0; step < 10000; step++)
     {
         integratorVerlet.integrateOneStepVerlet(solarSystem);
         if(step % skipPrint == 0)
         {
             solarSystem.writeToFilePlot();
-            //solarSystem.writeToFileAnimation();
         }
     }
 
