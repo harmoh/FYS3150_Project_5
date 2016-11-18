@@ -4,9 +4,10 @@
 #include "vec3.h"
 #include "verlet.h"
 #include "unitconverter.h"
+#include "system.h"
 
 using namespace std;
-ofstream ofile;
+//ofstream ofile;
 
 int main(int argc, char* argv[])
 {
@@ -28,10 +29,9 @@ int main(int argc, char* argv[])
 
     for(int step = 0; step < 10000; step++)
     {
-        integratorVerlet.integrateOneStepVerlet(solarSystem);
-        if(step % skipPrint == 0)
+        if(step % 100 == 0)
         {
-            solarSystem.writeToFilePlot();
+            //solarSystem.writeToFilePlot();
         }
     }
 

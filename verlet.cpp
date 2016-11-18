@@ -1,5 +1,6 @@
 #include "verlet.h"
-#include "solarsystem.h"
+#include "system.h"
+#include "particle.h"
 
 Verlet::Verlet(double dt) :
     m_dt(dt)
@@ -7,16 +8,16 @@ Verlet::Verlet(double dt) :
 
 }
 
-void Verlet::integrateOneStepVerlet(SolarSystem &system)
+void Verlet::integrate(System &system)
 {
-    system.calculateForcesAndEnergy();
+    system.calculateForces();
 
-    for(CelestialBody &body : system.bodies())
+    for(Particle &particle : system.particles())
     {
-        body.acceleration = body.force / body.mass;
-        body.position += m_dt * body.velocity + body.acceleration * m_dt * m_dt / 2;
+        particle.acceleration = particle.force / particle.mass;
+        particle.position += m_dt * particle.velocity + particle.acceleration * m_dt * m_dt / 2;
 
-        system.calculateForcesAndEnergy();
-        body.velocity += (body.force / body.mass + body.acceleration) * m_dt / 2;
+        system.calculateForces();
+        particle.velocity += (particle.force / particle.mass + particle.acceleration) * m_dt / 2;
     }
 }

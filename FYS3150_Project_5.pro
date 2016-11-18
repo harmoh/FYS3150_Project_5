@@ -7,10 +7,12 @@ SOURCES += main.cpp \
     vec3.cpp \
     verlet.cpp \
     unitconverter.cpp \
-    system.cpp
+    system.cpp \
+    particle.cpp
 
 HEADERS += \
     vec3.h \
     verlet.h \
     unitconverter.h \
-    system.h
+    system.h \
+    particle.h

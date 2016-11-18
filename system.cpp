@@ -1,4 +1,10 @@
 #include "system.h"
+#include <string>
+#include <cmath>
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
 
 System::System()
 {
@@ -11,35 +17,35 @@ void System::calculateForces()
     m_potentialEnergy = 0;
     m_angularMomentum.zeros();
 
-    // Reset forces for all bodies
-    for(CelestialBody &body : m_bodies)
+    // Reset forces for all particles
+    for(Particle &particle : m_particles)
     {
-        body.force.zeros();
+        particle.force.zeros();
     }
 
     double G = 4 * M_PI * M_PI;
-    for(int i = 0; i < numberOfBodies(); i++)
+    for(int i = 0; i < numberOfParticles(); i++)
     {
-        CelestialBody &body1 = m_bodies[i];
-        for(int j = i+1; j < numberOfBodies(); j++)
+        Particle &particle1 = m_particles[i];
+        for(int j = i+1; j < numberOfParticles(); j++)
         {
-            CelestialBody &body2 = m_bodies[j];
-            vec3 deltaRVector = body2.position - body1.position;
+            Particle &particle2 = m_particles[j];
+            vec3 deltaRVector = particle2.position - particle1.position;
             double dr = deltaRVector.length();
             double dr3 = dr*dr*dr;
-            body1.force += G * body1.mass * body2.mass * deltaRVector / (dr3);
-            body2.force -= G * body1.mass * body2.mass * deltaRVector / (dr3);
+            particle1.force += G * particle1.mass * particle2.mass * deltaRVector / (dr3);
+            particle2.force -= G * particle1.mass * particle2.mass * deltaRVector / (dr3);
 
-            m_angularMomentum += deltaRVector.cross(body1.velocity);
+            m_angularMomentum += deltaRVector.cross(particle1.velocity);
         }
-        m_potentialEnergy -= body1.force.length() * body1.position.length();
-        m_kineticEnergy += 0.5 * body1.mass * body1.velocity.lengthSquared();
+        m_potentialEnergy -= particle1.force.length() * particle1.position.length();
+        m_kineticEnergy += 0.5 * particle1.mass * particle1.velocity.lengthSquared();
     }
 }
 
-int System::numberOfBodies() const
+int System::numberOfParticles() const
 {
-    return m_bodies.size();
+    return m_particles.size();
 }
 
 double System::totalEnergy() const
@@ -67,15 +73,20 @@ void System::openFileAnimation(string filename)
 {
     filename.append(".xyz");
     ofile_animation.open(filename);
-    ofile_plot << setiosflags(ios::showpoint | ios::uppercase);
+    ofile_animation << setiosflags(ios::showpoint | ios::uppercase);
 }
 
 void System::writeToFileAnimation()
 {
-    ofile_animation << numberOfBodies() << endl;
+    ofile_animation << numberOfParticles() << endl;
     ofile_animation << "Comment line." << endl;
-    for(CelestialBody &body : m_bodies)
+    for(Particle &particle : m_particles)
     {
-        ofile_animation << body.position.x() << " " << body.position.y() << " " << body.position.z() << "\n";
+        ofile_animation << particle.position.x() << " " << particle.position.y() << " " << particle.position.z() << "\n";
     }
+}
+
+std::vector<Particle> &System::particles()
+{
+    return m_particles;
 }
