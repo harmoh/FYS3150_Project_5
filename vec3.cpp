@@ -1,4 +1,5 @@
 #include "vec3.h"
+#include "random.h"
 #include <cmath>
 #include <iostream>
 using namespace std;
@@ -19,6 +20,13 @@ void vec3::set(double x, double y, double z)
     components[0] = x;
     components[1] = y;
     components[2] = z;
+}
+
+void vec3::randomGaussian(double min, double max)
+{
+    components[0] = Random::nextGaussian(min, max);
+    components[1] = Random::nextGaussian(min, max);
+    components[2] = Random::nextGaussian(min, max);
 }
 
 double vec3::lengthSquared()

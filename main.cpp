@@ -16,9 +16,12 @@ int main(int argc, char* argv[])
     double latticeConstant = UnitConverter::lengthFromAngstroms(5.26); // From Angstroms
 
     // If there are input arguments are provided:
-    numberOfUnitCells = atoi(argv[1]); // Change number of unit cells
-    tempInit = atoi(argv[2]); // Change initial temperature
-    latticeConstant = atoi(argv[3]); // Change density (in Angstroms) of the lattice constant
+    // Change number of unit cells
+    if(argc > 2) numberOfUnitCells = atoi(argv[1]);
+    // Change initial temperature
+    if(argc > 3) tempInit = UnitConverter::temperatureFromSI(atof(argv[2]));
+    // Change density (in Angstroms) of the lattice constant
+    if(argc > 4) latticeConstant = UnitConverter::lengthFromAngstroms(atof(argv[3]));
 
     double dt = UnitConverter::timeFromSI(1e-15);
 
@@ -31,16 +34,14 @@ int main(int argc, char* argv[])
 
     Verlet integratorVerlet(dt);
 
-    for(int step = 0; step < 10000; step++)
+    cout << "Particles: " << system.numberOfParticles() << endl;
+    for(int step = 0; step < 100; step++)
     {
-        if(step % 100 == 0)
-        {
-            //solarSystem.writeToFilePlot();
-        }
+        integratorVerlet.integrate(system);
     }
 
+    // Final time and time used
     clock_t time_final = clock();
-
     double time_used = (time_final - time_initial) / (double) CLOCKS_PER_SEC;
     cout << "Time used: " << time_used << " seconds." << endl;
 

@@ -15,6 +15,7 @@ public:
 
     Particle(double mass);
     void resetForce();
+    void resetVelocityMaxwell(double temp);
 
     double mass() {return m_mass;}
     void setMass(double mass) {m_mass = mass;}

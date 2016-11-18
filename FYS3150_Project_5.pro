@@ -8,7 +8,8 @@ SOURCES += main.cpp \
     verlet.cpp \
     unitconverter.cpp \
     system.cpp \
-    particle.cpp
+    particle.cpp \
+    lennardjones.cpp
 
 HEADERS += \
     vec3.h \
@@ -16,4 +17,5 @@ HEADERS += \
     verlet.h \
     unitconverter.h \
     system.h \
-    particle.h
+    particle.h \
+    lennardjones.h

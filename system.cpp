@@ -26,13 +26,14 @@ void System::removeTotalMomentum()
 
 void System::createFCCLattice(int numberOfUnitCellsPerDimension, double latticeConstant, double temp)
 {
-    for(int i=0; i<100; i++) {
+    for(int i = 0; i < 100; i++)
+    {
         Particle *particle = new Particle(UnitConverter::massFromSI(6.63352088e-26));
         double x = Random::nextDouble(0, 10); // random number in the interval [0,10]
         double y = Random::nextDouble(0, 10);
         double z = Random::nextDouble(0, 10);
         particle->position.set(x,y,z);
-        //particle->resetVelocityMaxwellian(temp);
+        particle->resetVelocityMaxwell(temp);
         m_particles.push_back(particle);
     }
     setSystemSize(vec3(10, 10, 10)); // Remember to set the correct system size!

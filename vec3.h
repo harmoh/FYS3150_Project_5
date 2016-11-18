@@ -26,6 +26,7 @@ public:
     void setY(double y) {components[1] = y;}
     void setZ(double z) {components[2] = z;}
     void set(double x, double y, double z);
+    void randomGaussian(double min, double max);
 
     // Operators
     double &operator()(int index) { return components[index]; } // Allows access like myVector(0)
