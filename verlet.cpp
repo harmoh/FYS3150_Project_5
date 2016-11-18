@@ -12,12 +12,12 @@ void Verlet::integrate(System &system)
 {
     system.calculateForces();
 
-    for(Particle &particle : system.particles())
+    for(Particle *particle : system.particles())
     {
-        particle.acceleration = particle.force / particle.mass();
-        particle.position += m_dt * particle.velocity + particle.acceleration * m_dt * m_dt / 2;
+        particle->acceleration = particle->force / particle->mass();
+        particle->position += m_dt * particle->velocity + particle->acceleration * m_dt * m_dt / 2;
 
         system.calculateForces();
-        particle.velocity += (particle.force / particle.mass() + particle.acceleration) * m_dt / 2;
+        particle->velocity += (particle->force / particle->mass() + particle->acceleration) * m_dt / 2;
     }
 }

@@ -21,7 +21,7 @@ public:
 
     void openFileAnimation(std::string filename);
     void writeToFileAnimation();
-    std::vector<Particle> &particles();
+    std::vector<Particle*> &particles();
 
     int numberOfParticles() const;
     double totalEnergy() const;
@@ -33,7 +33,7 @@ public:
     vec3 systemSize() {return m_systemSize;}
 
 private:
-    std::vector<Particle> m_particles;
+    std::vector<Particle*> m_particles;
     std::ofstream ofile_animation;
 
     vec3 m_systemSize;

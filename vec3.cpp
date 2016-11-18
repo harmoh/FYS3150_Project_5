@@ -14,6 +14,13 @@ vec3::vec3(double x, double y, double z)
     components[2] = z;
 }
 
+void vec3::set(double x, double y, double z)
+{
+    components[0] = x;
+    components[1] = y;
+    components[2] = z;
+}
+
 double vec3::lengthSquared()
 {
     // Returns the square of the length (or norm) of the vector

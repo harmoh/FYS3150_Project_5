@@ -1,8 +1,10 @@
-#include "system.h"
 #include <string>
 #include <cmath>
 #include <iostream>
 #include <iomanip>
+#include "system.h"
+#include "unitconverter.h"
+#include "random.h"
 
 using namespace std;
 
@@ -25,13 +27,13 @@ void System::removeTotalMomentum()
 void System::createFCCLattice(int numberOfUnitCellsPerDimension, double latticeConstant, double temp)
 {
     for(int i=0; i<100; i++) {
-        Atom *atom = new Atom(UnitConverter::massFromSI(6.63352088e-26));
+        Particle *particle = new Particle(UnitConverter::massFromSI(6.63352088e-26));
         double x = Random::nextDouble(0, 10); // random number in the interval [0,10]
         double y = Random::nextDouble(0, 10);
         double z = Random::nextDouble(0, 10);
-        atom->position.set(x,y,z);
-        atom->resetVelocityMaxwellian(temperature);
-        m_atoms.push_back(atom);
+        particle->position.set(x,y,z);
+        //particle->resetVelocityMaxwellian(temp);
+        m_particles.push_back(particle);
     }
     setSystemSize(vec3(10, 10, 10)); // Remember to set the correct system size!
 }
@@ -43,11 +45,11 @@ void System::calculateForces()
     m_angularMomentum.zeros();
 
     // Reset forces for all particles
-    for(Particle &particle : m_particles)
+    for(Particle *particle : m_particles)
     {
-        particle.force.zeros();
+        particle->force.zeros();
     }
-
+    /*
     double G = 4 * M_PI * M_PI;
     for(int i = 0; i < numberOfParticles(); i++)
     {
@@ -64,6 +66,7 @@ void System::calculateForces()
         m_potentialEnergy -= particle1.force.length() * particle1.position.length();
         m_kineticEnergy += 0.5 * particle1.mass() * particle1.velocity.lengthSquared();
     }
+    */
 }
 
 int System::numberOfParticles() const
@@ -102,13 +105,13 @@ void System::writeToFileAnimation()
 {
     ofile_animation << numberOfParticles() << endl;
     ofile_animation << "Comment line." << endl;
-    for(Particle &particle : m_particles)
+    for(Particle *particle : m_particles)
     {
-        ofile_animation << particle.position.x() << " " << particle.position.y() << " " << particle.position.z() << "\n";
+        ofile_animation << particle->position.x() << " " << particle->position.y() << " " << particle->position.z() << "\n";
     }
 }
 
-std::vector<Particle> &System::particles()
+std::vector<Particle *> &System::particles()
 {
     return m_particles;
 }
