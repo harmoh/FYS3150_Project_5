@@ -27,17 +27,18 @@ int main(int argc, char* argv[])
 
     System system;
     system.createFCCLattice(numberOfUnitCells, latticeConstant, tempInit);
+    system.potential().setEpsilon(1.0);
+    system.potential().setSigma(1.0);
+
     system.removeTotalMomentum();
 
     // Initial time
     clock_t time_initial = clock();
 
-    Verlet integratorVerlet(dt);
-
     cout << "Particles: " << system.numberOfParticles() << endl;
     for(int step = 0; step < 100; step++)
     {
-        integratorVerlet.integrate(system);
+        system.integrator().integrate(system, dt);
     }
 
     // Final time and time used

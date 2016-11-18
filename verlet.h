@@ -4,9 +4,8 @@
 class Verlet
 {
 public:
-    double m_dt;
-    Verlet(double dt);
-    void integrate(class System &system);
+    Verlet();
+    void integrate(class System &system, double dt);
 };
 
 #endif // VERLET_H

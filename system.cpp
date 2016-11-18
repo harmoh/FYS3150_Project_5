@@ -13,17 +13,6 @@ System::System()
 
 }
 
-// Apply periodic boundary conditions
-void System::applyPBC()
-{
-
-}
-
-void System::removeTotalMomentum()
-{
-
-}
-
 void System::createFCCLattice(int numberOfUnitCellsPerDimension, double latticeConstant, double temp)
 {
     for(int i = 0; i < 100; i++)
@@ -37,6 +26,17 @@ void System::createFCCLattice(int numberOfUnitCellsPerDimension, double latticeC
         m_particles.push_back(particle);
     }
     setSystemSize(vec3(10, 10, 10)); // Remember to set the correct system size!
+}
+
+// Apply periodic boundary conditions
+void System::applyPBC()
+{
+
+}
+
+void System::removeTotalMomentum()
+{
+
 }
 
 void System::calculateForces()
@@ -68,6 +68,13 @@ void System::calculateForces()
         m_kineticEnergy += 0.5 * particle1.mass() * particle1.velocity.lengthSquared();
     }
     */
+}
+
+void System::step(double dt)
+{
+    m_integrator.integrate(*this, dt);
+    m_steps++;
+    m_time += dt;
 }
 
 int System::numberOfParticles() const
