@@ -9,7 +9,8 @@ SOURCES += main.cpp \
     unitconverter.cpp \
     system.cpp \
     particle.cpp \
-    lennardjones.cpp
+    lennardjones.cpp \
+    io.cpp
 
 HEADERS += \
     vec3.h \
@@ -18,4 +19,5 @@ HEADERS += \
     unitconverter.h \
     system.h \
     particle.h \
-    lennardjones.h
+    lennardjones.h \
+    io.h

@@ -5,6 +5,7 @@
 #include "verlet.h"
 #include "unitconverter.h"
 #include "system.h"
+#include "io.h"
 
 using namespace std;
 //ofstream ofile;
@@ -32,14 +33,18 @@ int main(int argc, char* argv[])
 
     system.removeTotalMomentum();
 
+    IO animation("Animation.xyz");
+
     // Initial time
     clock_t time_initial = clock();
 
     cout << "Particles: " << system.numberOfParticles() << endl;
-    for(int step = 0; step < 100; step++)
+    for(int step = 0; step < 10000; step++)
     {
-        system.integrator().integrate(system, dt);
+        system.step(dt);
+        animation.saveState(system);
     }
+    animation.close();
 
     // Final time and time used
     clock_t time_final = clock();

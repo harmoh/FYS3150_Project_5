@@ -13,6 +13,15 @@ System::System()
 
 }
 
+System::~System()
+{
+    for(Particle *particle : particles())
+    {
+        delete particle;
+    }
+    m_particles.clear();
+}
+
 void System::createFCCLattice(int numberOfUnitCellsPerDimension, double latticeConstant, double temp)
 {
     for(int i = 0; i < 100; i++)
@@ -43,31 +52,13 @@ void System::calculateForces()
 {
     m_kineticEnergy = 0;
     m_potentialEnergy = 0;
-    m_angularMomentum.zeros();
+    //m_angularMomentum.zeros();
 
     // Reset forces for all particles
     for(Particle *particle : m_particles)
     {
         particle->force.zeros();
     }
-    /*
-    double G = 4 * M_PI * M_PI;
-    for(int i = 0; i < numberOfParticles(); i++)
-    {
-        Particle &particle1 = m_particles[i];
-        for(int j = i+1; j < numberOfParticles(); j++)
-        {
-            Particle &particle2 = m_particles[j];
-            vec3 deltaRVector = particle2.position - particle1.position;
-            double dr = deltaRVector.length();
-            double dr3 = dr*dr*dr;
-            particle1.force += G * particle1.mass() * particle2.mass() * deltaRVector / (dr3);
-            particle2.force -= G * particle1.mass() * particle2.mass() * deltaRVector / (dr3);
-        }
-        m_potentialEnergy -= particle1.force.length() * particle1.position.length();
-        m_kineticEnergy += 0.5 * particle1.mass() * particle1.velocity.lengthSquared();
-    }
-    */
 }
 
 void System::step(double dt)

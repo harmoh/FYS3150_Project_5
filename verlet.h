@@ -3,6 +3,9 @@
 
 class Verlet
 {
+private:
+    bool m_firstStep = true;
+
 public:
     Verlet();
     void integrate(class System &system, double dt);

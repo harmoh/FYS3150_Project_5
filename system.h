@@ -30,6 +30,7 @@ private:
 
 public:
     System();
+    ~System();
 
     void createFCCLattice(int numberOfUnitCellsPerDimension, double latticeConstant, double temp);
     void applyPBC();

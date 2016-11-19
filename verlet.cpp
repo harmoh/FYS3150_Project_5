@@ -9,14 +9,20 @@ Verlet::Verlet()
 
 void Verlet::integrate(System &system, double dt)
 {
-    system.calculateForces();
+    if(m_firstStep)
+    {
+        system.calculateForces();
+        m_firstStep = false;
+    }
 
     for(Particle *particle : system.particles())
     {
         particle->acceleration = particle->force / particle->mass();
         particle->position += dt * particle->velocity + particle->acceleration * dt * dt / 2;
-
-        system.calculateForces();
+    }
+    system.calculateForces();
+    for(Particle *particle : system.particles())
+    {
         particle->velocity += (particle->force / particle->mass() + particle->acceleration) * dt / 2;
     }
 }
