@@ -10,7 +10,8 @@ SOURCES += main.cpp \
     system.cpp \
     particle.cpp \
     lennardjones.cpp \
-    io.cpp
+    io.cpp \
+    statisticssampler.cpp
 
 HEADERS += \
     vec3.h \
@@ -20,4 +21,5 @@ HEADERS += \
     system.h \
     particle.h \
     lennardjones.h \
-    io.h
+    io.h \
+    statisticssampler.h
