@@ -1,6 +1,7 @@
 #include "statisticssampler.h"
 #include "system.h"
 #include "lennardjones.h"
+#include "unitconverter.h"
 #include <iostream>
 
 using namespace std;
@@ -10,20 +11,33 @@ StatisticsSampler::StatisticsSampler()
 
 }
 
+StatisticsSampler::~StatisticsSampler()
+{
+    if(m_file.is_open())
+    {
+        m_file.close();
+    }
+}
+
 void StatisticsSampler::saveToFile(System &system)
 {
-    if(!m_file.good())
+    if(!m_file.is_open())
     {
         m_file.open("Statistics.txt", ofstream::out);
+        m_file << "x: \ty: \tz:" << endl;
         if(!m_file.good())
         {
             cout << "Error! Could not open 'Statistics.txt'" << endl;
             exit(1);
         }
     }
+
     if(m_file.is_open())
     {
-        // Print values...
+        Particle *particle = system.particles()[0];
+        m_file << UnitConverter::lengthToAngstroms(particle->position.x()) << " ";
+        m_file << UnitConverter::lengthToAngstroms(particle->position.y()) << " ";
+        m_file << UnitConverter::lengthToAngstroms(particle->position.z()) << "\n";
     }
 }
 

@@ -6,6 +6,7 @@
 #include "unitconverter.h"
 #include "system.h"
 #include "io.h"
+#include "statisticssampler.h"
 
 using namespace std;
 //ofstream ofile;
@@ -33,6 +34,7 @@ int main(int argc, char* argv[])
 
     system.removeTotalMomentum();
 
+    StatisticsSampler statisticsSampler;
     IO animation("Animation.xyz");
 
     // Initial time
@@ -42,6 +44,7 @@ int main(int argc, char* argv[])
     for(int step = 0; step < 10000; step++)
     {
         system.step(dt);
+        if(step % 10 == 0) statisticsSampler.sample(system);
         animation.saveState(system);
     }
     animation.close();

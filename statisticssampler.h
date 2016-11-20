@@ -16,6 +16,7 @@ private:
 
 public:
     StatisticsSampler();
+    ~StatisticsSampler();
 
     void saveToFile(System &system);
     void sample(System &system);

@@ -24,9 +24,6 @@ private:
     double m_time = 0;
 
     vec3 m_systemSize;
-    vec3 m_angularMomentum;
-    double m_kineticEnergy;
-    double m_potentialEnergy;
 
 public:
     System();
@@ -38,15 +35,9 @@ public:
     void calculateForces();
     void step(double dt);
 
-    void openFileAnimation(std::string filename);
-    void writeToFileAnimation();
     std::vector<Particle*> &particles();
 
-    int numberOfParticles() const;
-    double totalEnergy() const;
-    double kineticEnergy() const;
-    double potentialEnergy() const;
-    vec3 angularMomentum() const;
+    int numberOfParticles() const {return m_particles.size();}
 
     void setSystemSize(vec3 systemSize) {m_systemSize = systemSize;}
     vec3 systemSize() {return m_systemSize;}

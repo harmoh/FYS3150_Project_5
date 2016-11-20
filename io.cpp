@@ -38,7 +38,7 @@ void IO::saveState(System &system)
 {
     if(file.is_open())
     {
-        file << system.numberOfParticles() << endl;
+        file << system.numberOfParticles() << "\n";
         file << "Comment line." << endl;
         for(Particle *particle : system.particles())
         {
