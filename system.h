@@ -40,6 +40,7 @@ public:
     int numberOfParticles() const {return m_particles.size();}
 
     void setSystemSize(vec3 systemSize) {m_systemSize = systemSize;}
+    double systemVolume() {return systemSize()[0] * systemSize()[1] * systemSize()[2];}
     vec3 systemSize() {return m_systemSize;}
     LennardJones &potential() {return m_potential;}
     Verlet &integrator() {return m_integrator;}

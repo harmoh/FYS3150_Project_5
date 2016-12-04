@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
 
     cout << "Particles: " << system.numberOfParticles() << endl;
 
-    int totalSteps = 10000;
+    int totalSteps = 1000;
     for(int step = 0; step < totalSteps; step++)
     {
         system.step(dt);
