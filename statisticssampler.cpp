@@ -3,6 +3,7 @@
 #include "lennardjones.h"
 #include "unitconverter.h"
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -21,10 +22,19 @@ StatisticsSampler::~StatisticsSampler()
 
 void StatisticsSampler::saveToFile(System &system)
 {
+    int width = 15;
+    int precision = 6;
     if(!m_file.is_open())
     {
         m_file.open("Statistics.txt", ofstream::out);
-        m_file << "x: \ty: \tz:" << endl;
+        m_file << setw(width) << "Ek:";
+        m_file << setw(width) << "Ep:";
+        m_file << setw(width) << "Temp:";
+        m_file << setw(width) << "Density:";
+        m_file << setw(width) << "Momentum x:";
+        m_file << setw(width) << "Momentum y:";
+        m_file << setw(width) << "Momentum z:\n";
+        m_file << setiosflags(ios::showpoint | ios::uppercase);
         if(!m_file.good())
         {
             cout << "Error! Could not open 'Statistics.txt'" << endl;
@@ -34,13 +44,13 @@ void StatisticsSampler::saveToFile(System &system)
 
     if(m_file.is_open())
     {
-        Particle *particle = system.particles()[0];
-        m_file << UnitConverter::lengthToAngstroms(particle->position.x()) << " ";
-        m_file << UnitConverter::lengthToAngstroms(particle->position.y()) << " ";
-        m_file << UnitConverter::lengthToAngstroms(particle->position.z()) << "\t\t";
-        m_file << m_density << "\t\t";
-        m_file << particle->velocity << "\t\t";
-        m_file << m_momentum << "\n";
+        m_file << setw(width) << setprecision(precision) << m_kineticEnergy;
+        m_file << setw(width) << setprecision(precision) << m_potentialEnergy;
+        m_file << setw(width) << setprecision(precision) << m_temperature;
+        m_file << setw(width) << setprecision(precision) << m_density;
+        m_file << setw(width) << setprecision(precision) << m_momentum[0];
+        m_file << setw(width) << setprecision(precision) << m_momentum[1];
+        m_file << setw(width) << setprecision(precision) << m_momentum[2] << "\n";
     }
 }
 
