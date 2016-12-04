@@ -37,7 +37,9 @@ void StatisticsSampler::saveToFile(System &system)
         Particle *particle = system.particles()[0];
         m_file << UnitConverter::lengthToAngstroms(particle->position.x()) << " ";
         m_file << UnitConverter::lengthToAngstroms(particle->position.y()) << " ";
-        m_file << UnitConverter::lengthToAngstroms(particle->position.z()) << "\n";
+        m_file << UnitConverter::lengthToAngstroms(particle->position.z()) << "\t\t";
+        m_file << particle->velocity << "\t\t";
+        m_file << m_momentum << "\n";
     }
 }
 
@@ -47,6 +49,7 @@ void StatisticsSampler::sample(System &system)
     samplePotentialEnergy(system);
     sampleTemperature(system);
     sampleDensity(system);
+    sampleMomentum(system);
     saveToFile(system);
 }
 
@@ -73,3 +76,18 @@ void StatisticsSampler::sampleDensity(System &system)
 {
 
 }
+
+vec3 StatisticsSampler::sampleMomentum(System &system)
+{
+    m_momentum.zeros();
+
+    for(double i = 0; i < system.particles().size(); i++)
+    {
+        Particle *particle = system.particles()[i];
+        vec3 momemtumTemp = particle->velocity * particle->mass();
+        m_momentum += momemtumTemp;
+    }
+    return m_momentum;
+}
+
+

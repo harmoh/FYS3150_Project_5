@@ -2,6 +2,7 @@
 #define STATISTICSSAMPLER_H
 
 #include <fstream>
+#include "vec3.h"
 
 class System;
 
@@ -13,6 +14,7 @@ private:
     double m_potentialEnergy = 0;
     double m_temperature = 0;
     double m_density = 0;
+    vec3 m_momentum;
 
 public:
     StatisticsSampler();
@@ -24,6 +26,7 @@ public:
     void samplePotentialEnergy(System &system);
     void sampleTemperature(System &system);
     void sampleDensity(System &system);
+    vec3 sampleMomentum(System &system);
 
     double kineticEnergy() {return m_kineticEnergy;}
     double potentialEnergy() {return m_potentialEnergy;}

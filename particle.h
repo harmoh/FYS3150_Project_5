@@ -11,7 +11,6 @@ public:
     vec3 velocity;
     vec3 acceleration;
     vec3 force;
-    vec3 angularMomentum;
 
     Particle(double mass);
     void resetForce();

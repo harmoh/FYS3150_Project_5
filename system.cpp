@@ -5,6 +5,7 @@
 #include "system.h"
 #include "unitconverter.h"
 #include "random.h"
+#include "statisticssampler.h"
 
 using namespace std;
 
@@ -42,7 +43,7 @@ void System::createFCCLattice(int numberOfUnitCellsPerDimension, double latticeC
 // Apply periodic boundary conditions
 void System::applyPBC()
 {
-    for(int i = 0; i < m_particles.size(); i++)
+    for(double i = 0; i < m_particles.size(); i++)
     {
         Particle *particle = m_particles[i];
         for(int dim = 0; dim < 3; dim++) // In 3 dimensions
@@ -55,7 +56,14 @@ void System::applyPBC()
 
 void System::removeTotalMomentum()
 {
-
+    StatisticsSampler sampler;
+    vec3 momentum = sampler.sampleMomentum(*this);
+    momentum /= m_particles.size();
+    for(double i = 0; i < m_particles.size(); i++)
+    {
+        Particle *particle = m_particles[i];
+        particle->velocity -= momentum / particle->mass();
+    }
 }
 
 void System::calculateForces()

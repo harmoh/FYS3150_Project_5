@@ -25,6 +25,7 @@ int main(int argc, char* argv[])
     // Change density (in Angstroms) of the lattice constant
     if(argc > 4) latticeConstant = UnitConverter::lengthFromAngstroms(atof(argv[3]));
 
+    // Set time step
     double dt = UnitConverter::timeFromSI(1e-15);
 
     System system;
@@ -37,11 +38,13 @@ int main(int argc, char* argv[])
     StatisticsSampler statisticsSampler;
     IO animation("Animation.xyz");
 
-    // Initial time
+    // Initial time (CPU time)
     clock_t time_initial = clock();
 
     cout << "Particles: " << system.numberOfParticles() << endl;
-    for(int step = 0; step < 10000; step++)
+
+    int totalSteps = 10000;
+    for(int step = 0; step < totalSteps; step++)
     {
         system.step(dt);
         if(step % 10 == 0) statisticsSampler.sample(system);
@@ -49,7 +52,7 @@ int main(int argc, char* argv[])
     }
     animation.close();
 
-    // Final time and time used
+    // Final time and time used (CPU time)
     clock_t time_final = clock();
     double time_used = (time_final - time_initial) / (double) CLOCKS_PER_SEC;
     cout << "Time used: " << time_used << " seconds." << endl;
