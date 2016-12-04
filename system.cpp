@@ -25,19 +25,33 @@ System::~System()
 
 void System::createFCCLattice(int numberOfUnitCellsPerDimension, double latticeConstant, double temp)
 {
-    int L = 10; // Lattice size
-    for(int i = 0; i < 100; i++)
+    int N = numberOfUnitCellsPerDimension;
+    double b = latticeConstant;
+
+    double unitCellX[4] = {0, 0.5, 0, 0.5};
+    double unitCellY[4] = {0, 0.5, 0.5, 0};
+    double unitCellZ[4] = {0, 0, 0.5, 0.5};
+
+    for(int i = 0; i < N; i++)
     {
-        Particle *particle = new Particle(UnitConverter::massFromSI(6.63352088e-26));
-        double x = Random::nextDouble(0, L); // random number in the interval [0,10]
-        double y = Random::nextDouble(0, L);
-        double z = Random::nextDouble(0, L);
-        particle->position.set(x,y,z);
-        particle->resetVelocityMaxwell(temp);
-        m_particles.push_back(particle);
+        for(int j = 0; j < N; j++)
+        {
+            for(int k = 0; k < N; k++)
+            {
+                for(int atoms = 0; atoms < 4; atoms++)
+                {
+                    Particle *particle = new Particle(UnitConverter::massFromSI(6.63352088e-26));
+                    double x = (unitCellX[atoms] + i) * b;
+                    double y = (unitCellY[atoms] + j) * b;
+                    double z = (unitCellZ[atoms] + k) * b;
+                    particle->position.set(x, y, z);
+                    particle->resetVelocityMaxwell(temp);
+                    m_particles.push_back(particle);
+                }
+            }
+        }
     }
-    // Remember to set the correct system size!
-    setSystemSize(vec3(L, L, L));
+    setSystemSize(vec3(N*b, N*b, N*b));
 }
 
 // Apply periodic boundary conditions
