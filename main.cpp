@@ -13,7 +13,7 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    int numberOfUnitCells = 5; // Density of initial lattice (in Angstroms)
+    int numberOfUnitCells = 1; // Density of initial lattice (in Angstroms)
     double tempInit = UnitConverter::temperatureFromSI(300.0); // From K
     double latticeConstant = UnitConverter::lengthFromAngstroms(5.26); // From Angstroms
 
@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
     System system;
     system.createFCCLattice(numberOfUnitCells, latticeConstant, tempInit);
     system.potential().setEpsilon(1.0);
-    system.potential().setSigma(1.0);
+    system.potential().setSigma(3.405);
 
     system.removeTotalMomentum();
 
@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
     for(int step = 0; step < totalSteps; step++)
     {
         system.step(dt);
-        if(step % 10 == 0) statisticsSampler.sample(system);
+        if(step % 1 == 0) statisticsSampler.sample(system);
         animation.saveState(system);
     }
     animation.close();

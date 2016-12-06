@@ -20,7 +20,7 @@ private:
 
     std::ofstream ofile_animation;
 
-    double m_steps = 0;
+    int m_steps = 0;
     double m_time = 0;
 
     vec3 m_systemSize;
@@ -44,5 +44,10 @@ public:
     vec3 systemSize() {return m_systemSize;}
     LennardJones &potential() {return m_potential;}
     Verlet &integrator() {return m_integrator;}
+
+    int steps() {return m_steps;}
+    void setSteps(int steps) {m_steps = steps;}
+    double time() {return m_time;}
+    void setTime(double time) {m_time = time;}
 };
 #endif // SYSTEM_H

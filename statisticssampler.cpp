@@ -27,13 +27,16 @@ void StatisticsSampler::saveToFile(System &system)
     if(!m_file.is_open())
     {
         m_file.open("Statistics.txt", ofstream::out);
+        m_file << setw(width) << "Time step:";
+        m_file << setw(width) << "Time:";
         m_file << setw(width) << "Ek:";
         m_file << setw(width) << "Ep:";
         m_file << setw(width) << "Temp:";
         m_file << setw(width) << "Density:";
-        m_file << setw(width) << "Momentum x:";
-        m_file << setw(width) << "Momentum y:";
-        m_file << setw(width) << "Momentum z:\n";
+        //m_file << setw(width) << "Momentum x:";
+        //m_file << setw(width) << "Momentum y:";
+        //m_file << setw(width) << "Momentum z:";
+        m_file << "\n";
         m_file << setiosflags(ios::showpoint | ios::uppercase);
         if(!m_file.good())
         {
@@ -44,13 +47,16 @@ void StatisticsSampler::saveToFile(System &system)
 
     if(m_file.is_open())
     {
+        m_file << setw(width) << setprecision(precision) << system.steps();
+        m_file << setw(width) << setprecision(precision) << system.time();
         m_file << setw(width) << setprecision(precision) << m_kineticEnergy;
         m_file << setw(width) << setprecision(precision) << m_potentialEnergy;
         m_file << setw(width) << setprecision(precision) << m_temperature;
         m_file << setw(width) << setprecision(precision) << m_density;
-        m_file << setw(width) << setprecision(precision) << m_momentum[0];
-        m_file << setw(width) << setprecision(precision) << m_momentum[1];
-        m_file << setw(width) << setprecision(precision) << m_momentum[2] << "\n";
+        //m_file << setw(width) << setprecision(precision) << m_momentum[0];
+        //m_file << setw(width) << setprecision(precision) << m_momentum[1];
+        //m_file << setw(width) << setprecision(precision) << m_momentum[2];
+        m_file << "\n";
     }
 }
 
