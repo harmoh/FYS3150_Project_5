@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
     for(int step = 0; step < totalSteps; step++)
     {
         system.step(dt);
-        if(step % 1 == 0) statisticsSampler.sample(system);
+        if(step % 10 == 0) statisticsSampler.sample(system);
         animation.saveState(system);
     }
     animation.close();

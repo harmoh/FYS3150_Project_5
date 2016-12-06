@@ -15,25 +15,25 @@ void LennardJones::calculateForces(System &system)
 {
     m_potentialEnergy = 0;
 
-    double L = system.systemSize().x();
+    double L = system.systemSize()[0];
 
     double sigma6 = m_sigma * m_sigma * m_sigma * m_sigma * m_sigma * m_sigma;
     double sigma12 = sigma6 * sigma6;
 
-    //double rijCut = 2.5 * m_sigma;
-    //double rijCut2 = rijCut * rijCut;
-    //double overRijCut2 = 1.0 / rijCut2;
-    //double overRijCut6 = overRijCut2 * overRijCut2 * overRijCut2;
-    //double overRijCut12 = overRijCut6 * overRijCut6;
+    double rc = 2.5 * m_sigma;
+    double rc2 = rc * rc;
+    double overRc2 = 1.0 / rc2;
+    double overRc6 = overRc2 * overRc2 * overRc2;
+    double overRc12 = overRc6 * overRc6;
 
-    //double potentialEnergyAtRcut = 4 * m_epsilon * (sigma12 * overRijCut12 - sigma6 * overRijCut6);
+    double potentialEnergyRc = 4 * m_epsilon * (sigma12 * overRc12 - sigma6 * overRc6);
 
     for (double i = 0; i < system.particles().size(); i++)
     {
         Particle *particle1 = system.particles()[i];
-        double x = particle1->position.x();
-        double y = particle1->position.y();
-        double z = particle1->position.z();
+        double x = particle1->position[0];
+        double y = particle1->position[1];
+        double z = particle1->position[2];
 
         double fx = 0;
         double fy = 0;
@@ -45,9 +45,9 @@ void LennardJones::calculateForces(System &system)
         {
             Particle *particle2 = system.particles()[j];
 
-            double dx = x - particle2->position.x();
-            double dy = y - particle2->position.y();
-            double dz = z - particle2->position.z();
+            double dx = x - particle2->position[0];
+            double dy = y - particle2->position[1];
+            double dz = z - particle2->position[2];
 
             // Find the shortest distance (when dealing with period boundary conditions)
             if(dx > 0.5 * L) dx -= L;
@@ -58,14 +58,13 @@ void LennardJones::calculateForces(System &system)
             if(dz <= - 0.5 * L) dz += L;
 
             double rij2 = dx*dx + dy*dy + dz*dz;
-            //if(rij2 < rijCut2)
-            //{
+            if(rij2 < rc2)
+            {
                 double overRij2 = 1.0 / rij2;
                 double overRij = 1.0 / (sqrt(rij2));
                 double overRij6 = overRij2 * overRij2 * overRij2;
                 double overRij12 = overRij6 * overRij6;
 
-                //double peGradient = 24 * m_epsilon * overRij2 * (2*sigma12*overRij12 - sigma6*overRij6);
                 double peGradient = 24 * m_epsilon * (2*sigma12*overRij12*overRij - sigma6*overRij6*overRij);
 
                 fx += peGradient * dx;
@@ -76,8 +75,8 @@ void LennardJones::calculateForces(System &system)
                 particle2->force[1] -= peGradient * dy;
                 particle2->force[2] -= peGradient * dz;
 
-                potentialEnergy += 4 * m_epsilon * (sigma12*overRij12 - sigma6*overRij6);// - potentialEnergyAtRcut;
-            //}
+                potentialEnergy += 4 * m_epsilon * (sigma12*overRij12 - sigma6*overRij6) - potentialEnergyRc;
+            }
         }
         particle1->force[0] += fx;
         particle1->force[1] += fy;

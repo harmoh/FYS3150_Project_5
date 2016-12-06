@@ -39,7 +39,7 @@ void IO::saveState(System &system)
     if(file.is_open())
     {
         file << system.numberOfParticles() << "\n";
-        file << "Comment line. Time step: " << system.steps() << endl;
+        file << "Comment line. Time step: " << system.steps() << "\n";
         for(Particle *particle : system.particles())
         {
             file << "H "; // Particle type, can be used in Ovito to set default size and color
