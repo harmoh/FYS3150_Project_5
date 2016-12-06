@@ -75,7 +75,7 @@ void StatisticsSampler::sampleKineticEnergy(System &system)
     m_kineticEnergy = 0;
     for(Particle *particle : system.particles())
     {
-        // Get kinetic energy
+        m_kineticEnergy += 0.5 * particle->mass() * particle->velocity.lengthSquared();
     }
 }
 
@@ -86,7 +86,7 @@ void StatisticsSampler::samplePotentialEnergy(System &system)
 
 void StatisticsSampler::sampleTemperature(System &system)
 {
-
+    m_temperature = 2.0/3 * m_kineticEnergy / (system.particles().size());
 }
 
 void StatisticsSampler::sampleDensity(System &system)

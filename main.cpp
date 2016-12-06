@@ -13,7 +13,7 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    int numberOfUnitCells = 1; // Density of initial lattice (in Angstroms)
+    int numberOfUnitCells = 5; // Density of initial lattice (in Angstroms)
     double tempInit = UnitConverter::temperatureFromSI(300.0); // From K
     double latticeConstant = UnitConverter::lengthFromAngstroms(5.26); // From Angstroms
 
@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
 
     cout << "Particles: " << system.numberOfParticles() << endl;
 
-    int totalSteps = 1000;
+    int totalSteps = 100;
     for(int step = 0; step < totalSteps; step++)
     {
         system.step(dt);
