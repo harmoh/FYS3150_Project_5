@@ -30,8 +30,8 @@ int main(int argc, char* argv[])
 
     System system;
     system.createFCCLattice(numberOfUnitCells, latticeConstant, tempInit);
-    system.potential().setEpsilon(1.0);
-    system.potential().setSigma(3.405);
+    system.potential().setEpsilon(UnitConverter::temperatureFromSI(119.8));
+    system.potential().setSigma(UnitConverter::lengthFromAngstroms(3.405));
 
     system.removeTotalMomentum();
 
@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
 
     cout << "Particles: " << system.numberOfParticles() << endl;
 
-    int totalSteps = 100;
+    int totalSteps = 1000;
     for(int step = 0; step < totalSteps; step++)
     {
         system.step(dt);

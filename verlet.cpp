@@ -18,12 +18,12 @@ void Verlet::integrate(System &system, double dt)
     for(Particle *particle : system.particles())
     {
         particle->acceleration = particle->force / particle->mass();
-        particle->position += dt * particle->velocity + particle->acceleration * dt * dt / 2;
+        particle->position += particle->velocity * dt + particle->acceleration * dt * dt * 0.5;
     }
     system.applyPBC();
     system.calculateForces();
     for(Particle *particle : system.particles())
     {
-        particle->velocity += (particle->force / particle->mass() + particle->acceleration) * dt / 2;
+        particle->velocity +=  dt * 0.5 * (particle->force / particle->mass() + particle->acceleration);
     }
 }
