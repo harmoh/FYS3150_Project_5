@@ -20,8 +20,8 @@ public:
     StatisticsSampler();
     ~StatisticsSampler();
 
-    void saveToFile(System &system);
-    void sample(System &system);
+    void saveToFile(System &system, double tempInit);
+    void sample(System &system, double tempInit);
     void sampleKineticEnergy(System &system);
     void samplePotentialEnergy(System &system);
     void sampleTemperature(System &system);

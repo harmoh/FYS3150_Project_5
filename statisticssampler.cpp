@@ -20,13 +20,19 @@ StatisticsSampler::~StatisticsSampler()
     }
 }
 
-void StatisticsSampler::saveToFile(System &system)
+void StatisticsSampler::saveToFile(System &system, double tempInit)
 {
+    // Include temperature in outfile name, remove decimals
+    string fileName = "Statistics_";
+    string str_temp = to_string(UnitConverter::temperatureToSI(tempInit));
+    string tempInitStr = str_temp.substr(0, str_temp.find(".", 0));
+    fileName.append(tempInitStr + "K.txt");
+
     int width = 15;
     int precision = 6;
     if(!m_file.is_open())
     {
-        m_file.open("Statistics.txt", ofstream::out);
+        m_file.open(fileName, ofstream::out);
         m_file << setw(width) << "Time step:";
         m_file << setw(width) << "Time:";
         m_file << setw(width) << "Ek:";
@@ -60,14 +66,14 @@ void StatisticsSampler::saveToFile(System &system)
     }
 }
 
-void StatisticsSampler::sample(System &system)
+void StatisticsSampler::sample(System &system, double tempInit)
 {
     sampleKineticEnergy(system);
     samplePotentialEnergy(system);
     sampleTemperature(system);
     sampleDensity(system);
     sampleMomentum(system);
-    saveToFile(system);
+    saveToFile(system, tempInit);
 }
 
 void StatisticsSampler::sampleKineticEnergy(System &system)

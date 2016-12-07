@@ -19,11 +19,11 @@ int main(int argc, char* argv[])
 
     // If there are input arguments are provided:
     // Change number of unit cells
-    if(argc > 2) numberOfUnitCells = atoi(argv[1]);
+    if(argc > 1) numberOfUnitCells = atoi(argv[1]);
     // Change initial temperature
-    if(argc > 3) tempInit = UnitConverter::temperatureFromSI(atof(argv[2]));
+    if(argc > 2) tempInit = UnitConverter::temperatureFromSI(atof(argv[2]));
     // Change density (in Angstroms) of the lattice constant
-    if(argc > 4) latticeConstant = UnitConverter::lengthFromAngstroms(atof(argv[3]));
+    if(argc > 3) latticeConstant = UnitConverter::lengthFromAngstroms(atof(argv[3]));
 
     // Set time step
     double dt = UnitConverter::timeFromSI(1e-15);
@@ -36,18 +36,25 @@ int main(int argc, char* argv[])
     system.removeTotalMomentum();
 
     StatisticsSampler statisticsSampler;
-    IO animation("Animation_300K.xyz");
+
+    // Include temperature in outfile name, remove decimals
+    string animationName = "Animation_";
+    string str_temp = to_string(UnitConverter::temperatureToSI(tempInit));
+    string tempInitStr = str_temp.substr(0, str_temp.find(".", 0));
+    animationName.append(tempInitStr + "K.xyz");
+    IO animation(animationName.c_str());
 
     // Initial time (CPU time)
     clock_t time_initial = clock();
 
-    cout << "Particles: " << system.numberOfParticles() << endl;
+    cout << "Particles: " << system.numberOfParticles() << "\tTemperature: " <<
+            UnitConverter::temperatureToSI(tempInit) << endl;
 
     int totalSteps = 1000;
     for(int step = 0; step < totalSteps; step++)
     {
         system.step(dt);
-        if(step % 10 == 0) statisticsSampler.sample(system);
+        if(step % 10 == 0) statisticsSampler.sample(system, tempInit);
         animation.saveState(system);
     }
     animation.close();
