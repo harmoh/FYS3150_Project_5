@@ -32,11 +32,23 @@ os.system(run)
 # Fetching data by a call on read:
 x0, x1_100 = read('Statistics_100K.txt')
 
+# Temperature 150K
+run = './main.o 5 150'
+os.system(run)
+# Fetching data by a call on read:
+x0, x1_150 = read('Statistics_150K.txt')
+
 # Temperature 200K
 run = './main.o 5 200'
 os.system(run)
 # Fetching data by a call on read:
 x0, x1_200 = read('Statistics_200K.txt')
+
+# Temperature 250K
+run = './main.o 5 250'
+os.system(run)
+# Fetching data by a call on read:
+x0, x1_250 = read('Statistics_250K.txt')
 
 # Temperature 300K
 run = './main.o 5 300'
@@ -74,43 +86,21 @@ os.system(run)
 # Fetching data by a call on read:
 x0, x1_800 = read('Statistics_800K.txt')
 
-# Temperature 900K
-run = './main.o 5 900'
-os.system(run)
-# Fetching data by a call on read:
-x0, x1_900 = read('Statistics_900K.txt')
-
-# Temperature 1000K
-run = './main.o 5 1000'
-os.system(run)
-# Fetching data by a call on read:
-x0, x1_1000 = read('Statistics_1000K.txt')
-
 plt.xlabel('Time step')
 plt.ylabel('Temperature (K)')
 plt.rcParams.update({'font.size': 10})
 plt.plot(x0, x1_50, label = '$T = 50$')
 plt.plot(x0, x1_100, label = '$T = 100$')
+plt.plot(x0, x1_150, label = '$T = 150$')
 plt.plot(x0, x1_200, label = '$T = 200$')
+plt.plot(x0, x1_250, label = '$T = 250$')
 plt.plot(x0, x1_300, label = '$T = 300$')
 plt.plot(x0, x1_400, label = '$T = 400$')
 plt.plot(x0, x1_500, label = '$T = 500$')
 plt.plot(x0, x1_600, label = '$T = 600$')
 plt.plot(x0, x1_700, label = '$T = 700$')
 plt.plot(x0, x1_800, label = '$T = 800$')
-plt.plot(x0, x1_900, label = '$T = 900$')
-plt.plot(x0, x1_1000, label = '$T = 1000$')
 plt.legend(loc='upper right',fancybox='True')
 plt.grid()
 plt.savefig('Temperature.eps', format = 'eps', dpi = 1000, bbox_inches='tight') # Change to appropriate name
 #plt.show();
-
-
-
-
-
-
-
-
-
-
