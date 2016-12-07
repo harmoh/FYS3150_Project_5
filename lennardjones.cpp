@@ -61,19 +61,18 @@ void LennardJones::calculateForces(System &system)
             if(rij2 < rc2)
             {
                 double overRij2 = 1.0 / rij2;
-                double overRij = 1.0 / (sqrt(rij2));
                 double overRij6 = overRij2 * overRij2 * overRij2;
                 double overRij12 = overRij6 * overRij6;
 
-                double peGradient = 24 * m_epsilon * (2*sigma12*overRij12*overRij - sigma6*overRij6*overRij);
+                double forceGradient = 24 * m_epsilon * overRij2 * (2*sigma12*overRij12 - sigma6*overRij6);
 
-                fx += peGradient * dx;
-                fy += peGradient * dy;
-                fz += peGradient * dz;
+                fx += forceGradient * dx;
+                fy += forceGradient * dy;
+                fz += forceGradient * dz;
 
-                particle2->force[0] -= peGradient * dx;
-                particle2->force[1] -= peGradient * dy;
-                particle2->force[2] -= peGradient * dz;
+                particle2->force[0] -= forceGradient * dx;
+                particle2->force[1] -= forceGradient * dy;
+                particle2->force[2] -= forceGradient * dz;
 
                 potentialEnergy += 4 * m_epsilon * (sigma12*overRij12 - sigma6*overRij6) - potentialEnergyRc;
             }

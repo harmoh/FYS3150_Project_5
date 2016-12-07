@@ -13,7 +13,7 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    int numberOfUnitCells = 5; // Density of initial lattice (in Angstroms)
+    int numberOfUnitCells = 5; // Unit cells in lattice
     double tempInit = UnitConverter::temperatureFromSI(300.0); // From K
     double latticeConstant = UnitConverter::lengthFromAngstroms(5.26); // From Angstroms
 
@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
     system.removeTotalMomentum();
 
     StatisticsSampler statisticsSampler;
-    IO animation("Animation.xyz");
+    IO animation("Animation_300K.xyz");
 
     // Initial time (CPU time)
     clock_t time_initial = clock();
