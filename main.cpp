@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
     cout << "Particles: " << system.numberOfParticles() << "\tTemperature: " <<
             UnitConverter::temperatureToSI(tempInit) << endl;
 
-    int totalSteps = 1000;
+    int totalSteps = 2000;
     for(int step = 0; step < totalSteps; step++)
     {
         system.step(dt);

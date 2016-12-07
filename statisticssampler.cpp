@@ -38,6 +38,7 @@ void StatisticsSampler::saveToFile(System &system, double tempInit)
         m_file << setw(width) << "Ek:";
         m_file << setw(width) << "Ep:";
         m_file << setw(width) << "Temp:";
+        m_file << setw(width) << "T/Ti:";
         m_file << setw(width) << "Density:";
         //m_file << setw(width) << "Momentum x:";
         //m_file << setw(width) << "Momentum y:";
@@ -58,6 +59,7 @@ void StatisticsSampler::saveToFile(System &system, double tempInit)
         m_file << setw(width) << setprecision(precision) << m_kineticEnergy;
         m_file << setw(width) << setprecision(precision) << m_potentialEnergy;
         m_file << setw(width) << setprecision(precision) << m_temperature;
+        m_file << setw(width) << setprecision(precision) << m_temperature/tempInit;
         m_file << setw(width) << setprecision(precision) << m_density;
         //m_file << setw(width) << setprecision(precision) << m_momentum[0];
         //m_file << setw(width) << setprecision(precision) << m_momentum[1];
