@@ -16,7 +16,7 @@ def read(filename):
     for line in lines:
         words = line.split()
         x0.append(float(words[0])) # Step number
-        x1.append(float(words[5])) # Temperature ratio
+        x1.append(float(words[6])) # Temperature ratio
     infile.close()
     return x0, x1
 

@@ -13,6 +13,7 @@ private:
     double m_kineticEnergy = 0;
     double m_potentialEnergy = 0;
     double m_temperature = 0;
+    double m_totalEnergy = 0;
     double m_density = 0;
     vec3 m_momentum;
 
@@ -24,6 +25,7 @@ public:
     void sample(System &system, double tempInit);
     void sampleKineticEnergy(System &system);
     void samplePotentialEnergy(System &system);
+    void sampleTotalEnergy();
     void sampleTemperature(System &system);
     void sampleDensity(System &system);
     vec3 sampleMomentum(System &system);

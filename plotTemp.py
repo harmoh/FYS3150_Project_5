@@ -16,7 +16,7 @@ def read(filename):
     for line in lines:
         words = line.split()
         x0.append(float(words[0])) # Step number
-        x1.append(float(words[4])*119.735) # Temperature
+        x1.append(float(words[5])*119.735) # Temperature
     infile.close()
     return x0, x1
 
@@ -102,5 +102,5 @@ plt.plot(x0, x1_700, label = '$T = 700$')
 plt.plot(x0, x1_800, label = '$T = 800$')
 plt.legend(loc='upper right',fancybox='True')
 plt.grid()
-plt.savefig('Temperature.eps', format = 'eps', dpi = 1000, bbox_inches='tight') # Change to appropriate name
+plt.savefig('Temperature.eps', format = 'eps', dpi = 1000, bbox_inches='tight')
 #plt.show();

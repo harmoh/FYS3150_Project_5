@@ -29,7 +29,7 @@ void StatisticsSampler::saveToFile(System &system, double tempInit)
     fileName.append(tempInitStr + "K.txt");
 
     int width = 15;
-    int precision = 6;
+    int precision = 8;
     if(!m_file.is_open())
     {
         m_file.open(fileName, ofstream::out);
@@ -37,6 +37,7 @@ void StatisticsSampler::saveToFile(System &system, double tempInit)
         m_file << setw(width) << "Time:";
         m_file << setw(width) << "Ek:";
         m_file << setw(width) << "Ep:";
+        m_file << setw(width) << "Et:";
         m_file << setw(width) << "Temp:";
         m_file << setw(width) << "T/Ti:";
         m_file << setw(width) << "Density:";
@@ -58,6 +59,7 @@ void StatisticsSampler::saveToFile(System &system, double tempInit)
         m_file << setw(width) << setprecision(precision) << system.time();
         m_file << setw(width) << setprecision(precision) << m_kineticEnergy;
         m_file << setw(width) << setprecision(precision) << m_potentialEnergy;
+        m_file << setw(width) << setprecision(precision) << m_totalEnergy;
         m_file << setw(width) << setprecision(precision) << m_temperature;
         m_file << setw(width) << setprecision(precision) << m_temperature/tempInit;
         m_file << setw(width) << setprecision(precision) << m_density;
@@ -72,6 +74,7 @@ void StatisticsSampler::sample(System &system, double tempInit)
 {
     sampleKineticEnergy(system);
     samplePotentialEnergy(system);
+    sampleTotalEnergy();
     sampleTemperature(system);
     sampleDensity(system);
     sampleMomentum(system);
@@ -90,6 +93,11 @@ void StatisticsSampler::sampleKineticEnergy(System &system)
 void StatisticsSampler::samplePotentialEnergy(System &system)
 {
     m_potentialEnergy = system.potential().potentialEnergy();
+}
+
+void StatisticsSampler::sampleTotalEnergy()
+{
+    m_totalEnergy = m_kineticEnergy + m_potentialEnergy;
 }
 
 void StatisticsSampler::sampleTemperature(System &system)
