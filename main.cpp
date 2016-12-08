@@ -47,10 +47,11 @@ int main(int argc, char* argv[])
     // Initial time (CPU time)
     clock_t time_initial = clock();
 
-    cout << "Particles: " << system.numberOfParticles() << "\tTemperature: " <<
-            UnitConverter::temperatureToSI(tempInit) << endl;
+    int totalSteps = 10000;
 
-    int totalSteps = 1000;
+    cout << "Particles: " << system.numberOfParticles() << "\tTemperature: " <<
+            UnitConverter::temperatureToSI(tempInit) << "\tTotal steps: " << totalSteps << endl;
+
     for(int step = 0; step < totalSteps; step++)
     {
         system.step(dt);

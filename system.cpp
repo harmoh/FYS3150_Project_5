@@ -45,6 +45,7 @@ void System::createFCCLattice(int numberOfUnitCellsPerDimension, double latticeC
                     double y = (unitCellY[atoms] + j) * b;
                     double z = (unitCellZ[atoms] + k) * b;
                     particle->position.set(x, y, z);
+                    particle->initialPosition.set(x, y, z);
                     particle->resetVelocityMaxwell(temp);
                     m_particles.push_back(particle);
                 }
@@ -63,8 +64,16 @@ void System::applyPBC()
         Particle *particle = m_particles[i];
         for(int dim = 0; dim < 3; dim++) // In 3 dimensions
         {
-            if(particle->position[dim] < 0) particle->position[dim] += L;
-            if(particle->position[dim] >= L) particle->position[dim] -= L;
+            if(particle->position[dim] < 0)
+            {
+                particle->position[dim] += L;
+                particle->initialPosition[dim] += L;
+            }
+            if(particle->position[dim] >= L)
+            {
+                particle->position[dim] -= L;
+                particle->initialPosition[dim] -= L;
+            }
         }
     }
 }

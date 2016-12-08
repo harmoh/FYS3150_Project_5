@@ -12,6 +12,8 @@ public:
     vec3 acceleration;
     vec3 force;
 
+    vec3 initialPosition;
+
     Particle(double mass);
     void resetForce();
     void resetVelocityMaxwell(double temp);

@@ -41,6 +41,7 @@ void StatisticsSampler::saveToFile(System &system, double tempInit)
         m_file << setw(width) << "Temp:";
         m_file << setw(width) << "T/Ti:";
         m_file << setw(width) << "Density:";
+        m_file << setw(width) << "Diffusion:";
         //m_file << setw(width) << "Momentum x:";
         //m_file << setw(width) << "Momentum y:";
         //m_file << setw(width) << "Momentum z:";
@@ -63,6 +64,7 @@ void StatisticsSampler::saveToFile(System &system, double tempInit)
         m_file << setw(width) << setprecision(precision) << m_temperature;
         m_file << setw(width) << setprecision(precision) << m_temperature/tempInit;
         m_file << setw(width) << setprecision(precision) << m_density;
+        m_file << setw(width) << setprecision(precision) << m_diffusionConstant;
         //m_file << setw(width) << setprecision(precision) << m_momentum[0];
         //m_file << setw(width) << setprecision(precision) << m_momentum[1];
         //m_file << setw(width) << setprecision(precision) << m_momentum[2];
@@ -77,6 +79,7 @@ void StatisticsSampler::sample(System &system, double tempInit)
     sampleTotalEnergy();
     sampleTemperature(system);
     sampleDensity(system);
+    sampleDiffusion(system);
     sampleMomentum(system);
     saveToFile(system, tempInit);
 }
@@ -113,6 +116,19 @@ void StatisticsSampler::sampleDensity(System &system)
         m_density += particle->mass();
     }
     m_density /= system.systemVolume();
+}
+
+void StatisticsSampler::sampleDiffusion(System &system)
+{
+    double r2 = 0;
+    for(double i = 0; i < system.particles().size(); i++)
+    {
+        Particle *particle = system.particles()[i];
+        r2 += (particle->position - particle->initialPosition).lengthSquared();
+    }
+    r2 /= system.particles().size();
+    m_diffusionConstant = r2 / (6 * system.time());
+    //cout << "Diffusion constant = " << m_diffusionConstant << "\n";
 }
 
 vec3 StatisticsSampler::sampleMomentum(System &system)

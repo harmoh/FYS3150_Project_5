@@ -15,6 +15,7 @@ private:
     double m_temperature = 0;
     double m_totalEnergy = 0;
     double m_density = 0;
+    double m_diffusionConstant = 0;
     vec3 m_momentum;
 
 public:
@@ -28,6 +29,7 @@ public:
     void sampleTotalEnergy();
     void sampleTemperature(System &system);
     void sampleDensity(System &system);
+    void sampleDiffusion(System &system);
     vec3 sampleMomentum(System &system);
 
     double kineticEnergy() {return m_kineticEnergy;}
