@@ -1,5 +1,8 @@
 # Runs main.cpp and plots the generated .txt files
 
+# NOTE: This script will only work if the two first columns of the Statistics
+# file is changed to the position of one atom in x and y dimension, respectively.
+
 import os
 from math import *
 import numpy as np
@@ -17,18 +20,16 @@ def read(filename):
     for line in lines:
         words = line.split()
         x0.append(float(words[0])) # x
-        x1.append(float(words[1])) #y
+        x1.append(float(words[1])) # y
     infile.close()
     return x0, x1
 
-# Fetching data by a call on read_x_u_v for three different n:
-x0, x1 = read('Statistics.txt')
+# Fetching data by a call on read:
+x0, x1 = read('Results/Statistics_300K.txt')
 
 plt.xlabel('x')
 plt.ylabel('y')
 plt.rcParams.update({'font.size': 10})
 plt.plot(x0, x1, '.')
-#plt.legend(loc='upper right',fancybox='True')
 plt.grid()
-plt.savefig('NotPBC.eps', format = 'eps', dpi = 1000, bbox_inches='tight') # Change to appropriate name
-#plt.show();
+plt.savefig('NotPBC.eps', format = 'eps', dpi = 1000, bbox_inches='tight')

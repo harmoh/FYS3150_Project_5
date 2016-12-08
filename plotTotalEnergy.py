@@ -13,25 +13,24 @@ def read(filename):
     lines = infile.readlines()[-1]
     words = lines.split()
     x0 = float(words[5])*119.735 # Temperature
-    x1 = float(words[8]) # Diffusion constant
+    x1 = float(words[4]) # Total energy
     infile.close()
     return x0, x1
 
 x0 = []; x1 = [];
 
-for temp in range (200, 1000, 10):
+for temp in range (600, 800, 100):
     run = './main.o 5 ' + str(temp)
     os.system(run)
     # Fetching data by a call on read:
     x0_temp, x1_temp = read('Results/Statistics_' + str(temp) + 'K.txt')
-    #x0.append(x0_temp);
     x0.append(str(0.5*temp));
     x1.append(x1_temp);
 
 plt.xlabel('Temperature (K)')
-plt.ylabel('Diffusion constant')
+plt.ylabel('Total energy')
 plt.rcParams.update({'font.size': 10})
 plt.plot(x0, x1)
 plt.grid()
-plt.savefig('DiffusionConstant.eps', format = 'eps', dpi = 1000, bbox_inches='tight')
+plt.savefig('TotalEnergy.eps', format = 'eps', dpi = 1000, bbox_inches='tight')
 #plt.show();

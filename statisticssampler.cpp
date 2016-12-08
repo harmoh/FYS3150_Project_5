@@ -23,7 +23,7 @@ StatisticsSampler::~StatisticsSampler()
 void StatisticsSampler::saveToFile(System &system, double tempInit)
 {
     // Include temperature in outfile name, remove decimals
-    string fileName = "Statistics_";
+    string fileName = "Results/Statistics_";
     string str_temp = to_string(UnitConverter::temperatureToSI(tempInit));
     string tempInitStr = str_temp.substr(0, str_temp.find(".", 0));
     fileName.append(tempInitStr + "K.txt");

@@ -24,67 +24,67 @@ def read(filename):
 run = './main.o 5 50'
 os.system(run)
 # Fetching data by a call on read:
-x0, x1_50 = read('Statistics_50K.txt')
+x0, x1_50 = read('Results/Statistics_50K.txt')
 
 # Temperature 100K
 run = './main.o 5 100'
 os.system(run)
 # Fetching data by a call on read:
-x0, x1_100 = read('Statistics_100K.txt')
+x0, x1_100 = read('Results/Statistics_100K.txt')
 
 # Temperature 150K
 run = './main.o 5 150'
 os.system(run)
 # Fetching data by a call on read:
-x0, x1_150 = read('Statistics_150K.txt')
+x0, x1_150 = read('Results/Statistics_150K.txt')
 
 # Temperature 200K
 run = './main.o 5 200'
 os.system(run)
 # Fetching data by a call on read:
-x0, x1_200 = read('Statistics_200K.txt')
+x0, x1_200 = read('Results/Statistics_200K.txt')
 
 # Temperature 250K
 run = './main.o 5 250'
 os.system(run)
 # Fetching data by a call on read:
-x0, x1_250 = read('Statistics_250K.txt')
+x0, x1_250 = read('Results/Statistics_250K.txt')
 
 # Temperature 300K
 run = './main.o 5 300'
 os.system(run)
 # Fetching data by a call on read:
-x0, x1_300 = read('Statistics_300K.txt')
+x0, x1_300 = read('Results/Statistics_300K.txt')
 
 # Temperature 400K
 run = './main.o 5 400'
 os.system(run)
 # Fetching data by a call on read:
-x0, x1_400 = read('Statistics_400K.txt')
+x0, x1_400 = read('Results/Statistics_400K.txt')
 
 # Temperature 500K
 run = './main.o 5 500'
 os.system(run)
 # Fetching data by a call on read:
-x0, x1_500 = read('Statistics_500K.txt')
+x0, x1_500 = read('Results/Statistics_500K.txt')
 
 # Temperature 600K
 run = './main.o 5 600'
 os.system(run)
 # Fetching data by a call on read:
-x0, x1_600 = read('Statistics_600K.txt')
+x0, x1_600 = read('Results/Statistics_600K.txt')
 
 # Temperature 700K
 run = './main.o 5 700'
 os.system(run)
 # Fetching data by a call on read:
-x0, x1_700 = read('Statistics_700K.txt')
+x0, x1_700 = read('Results/Statistics_700K.txt')
 
 # Temperature 800K
 run = './main.o 5 800'
 os.system(run)
 # Fetching data by a call on read:
-x0, x1_800 = read('Statistics_800K.txt')
+x0, x1_800 = read('Results/Statistics_800K.txt')
 
 plt.xlabel('Time step')
 plt.ylabel('Temperature (K)')

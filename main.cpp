@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
     StatisticsSampler statisticsSampler;
 
     // Include temperature in outfile name, remove decimals
-    string animationName = "Animation_";
+    string animationName = "Results/Animation_";
     string str_temp = to_string(UnitConverter::temperatureToSI(tempInit));
     string tempInitStr = str_temp.substr(0, str_temp.find(".", 0));
     animationName.append(tempInitStr + "K.xyz");
@@ -47,7 +47,9 @@ int main(int argc, char* argv[])
     // Initial time (CPU time)
     clock_t time_initial = clock();
 
-    int totalSteps = 10000;
+    int totalSteps = 100;
+    int skipStep = 1;
+    if(totalSteps >= 1000) skipStep = totalSteps / 100;
 
     cout << "Particles: " << system.numberOfParticles() << "\tTemperature: " <<
             UnitConverter::temperatureToSI(tempInit) << "\tTotal steps: " << totalSteps << endl;
@@ -55,7 +57,7 @@ int main(int argc, char* argv[])
     for(int step = 0; step < totalSteps; step++)
     {
         system.step(dt);
-        if(step % 10 == 0) statisticsSampler.sample(system, tempInit);
+        if(step % skipStep == 0) statisticsSampler.sample(system, tempInit);
         animation.saveState(system);
     }
     animation.close();
